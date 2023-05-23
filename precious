@@ -1,14 +1,15 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 
+
 local MainWindow = Rayfield:CreateWindow({
-   Name = "Precious Hub",
-   LoadingTitle = "Locks + Anti Locks Gui. V1.0.0",
+   Name = "Precious Hub V2.0.0 BETA",
+   LoadingTitle = "Locks + Anti Locks Gui + Exploit Status",
    LoadingSubtitle = "Made By preciøus#0001",
    ConfigurationSaving = {
       Enabled = true,
       FolderName = nil, -- Create a custom folder for your hub/game
-      FileName = "Preciøus Hub"
+      FileName = "Preciøus Hub BETA"
    },
    Discord = {
       Enabled = false,
@@ -17,9 +18,9 @@ local MainWindow = Rayfield:CreateWindow({
    },
    KeySystem = true, -- Set this to true to use our key system
    KeySettings = {
-      Title = "Preciøus Hub",
-      Subtitle = "Key System",
-      Note = "This Script Is Currently Paid Only, Soon WILL BE RELEASED. Dm preciøus#0001 For Purchase ",
+      Title = "Preciøus Hub V2.0.0 BETA",
+      Subtitle = "Precious Hub Login System",
+      Note = "You Are Currently On The BETA Version Of Precious Hub ",
       FileName = "Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
       SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
       GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
@@ -31,8 +32,13 @@ local MainWindow = Rayfield:CreateWindow({
 local Tab = MainWindow:CreateTab("Locks", 4483362458) -- Title, Image
 
 
+local Section = Tab:CreateSection("Streamable Locks With Resolver")
+
+
+
+
 local Button = Tab:CreateButton({
-   Name = "Streamable W. Resolver",
+   Name = "Precious Streamable V1.0.0",
    Callback = function()
    if not game:IsLoaded() then
 	game.Loaded:Wait()
@@ -657,522 +663,10 @@ end
 })
 
 
-local Button = Tab:CreateButton({
-   Name = "Dns W. Resolver",
-   Callback = function()
-   getgenv().DNS = {
-    General = {
-        Notifications = true,
-        FOVMode = "PredictionPoint"
-    },
-    Silent = {
-        Main = {
-            Enabled = true,
-            Mode = "Target",
-            Toggle = "C",
-            Prediction = 0.12471,
-            Parts = {"Head","LowerTorso","UpperTorso"}
-        },
-        FOV = {
-            ShowFOV = true,
-            Radius = 70,
-            Color = Color3.fromRGB(0, 71, 171),
-            Filled = false,
-            Transparency = 0.8
-        }
-    },
-    Camlock = {
-        Main = {
-            Enabled = true,
-            Key = "Q",
-            UnlockKey = "T",
-            SmoothLock = true,
-            Smoothness = 0.067,
-            PredictMovement = true,
-            Prediction = 0.143,
-            Shake = true,
-            ShakeValue = 1,
-            Parts = {"Head"}
-        },
-        FOV = {
-            UseFOV = true,
-            ShowFOV = false,
-            Radius = 120,
-            Color = Color3.fromRGB(0, 71, 171),
-            Filled = false,
-            Transparency = 0.4
-        }
-    },
-    Tracer = {
-        Enabled = false,
-        Color = Color3.fromRGB(137, 207, 240),
-        Transparency = 0.4,
-        Visible = false
-    },
-    AutoPrediction = { -- the numbers are pings ( this is for silent + Current sets not recommended )
-        Enabled = true,
-        ping20_30 = 0.12588,
-        ping30_40 = 0.11911,
-        ping40_50 = 0.12471,
-        ping50_60 = 0.12766,
-        ping60_70 = 0.12731,
-        ping70_80 = 0.12951,
-        ping80_90 = 0.13181,
-        ping90_100 = 0.138,
-        ping100_110 = 0.146,
-        ping110_120 = 0.1367,
-        ping120_130 = 0.1401,
-        ping130_140 = 0.1437,
-        ping140_150 = 0.153,
-        ping150_160 = 0.1514,
-        ping160_170 = 0.1663,
-        ping170_180 = 0.1672,
-        ping180_190 = 0.1848,
-        ping190_200 = 0.1865,
-    }
-}
-
-local function getnamecall()
-    if game.PlaceId == 2788229376 then
-        return "UpdateMousePos"
-    elseif game.PlaceId == 5602055394 or game.PlaceId == 7951883376 then
-        return "MousePos"
-    elseif game.PlaceId == 9825515356 then
-        return "GetMousePos"
-    end
-end
-
-local namecalltype = getnamecall()
-
-function MainEventLocate()
-    for _,v in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
-        if v.Name == "MainEvent" then
-            return v
-        end
-    end
-end
-
-local mainevent = MainEventLocate()
-
--- // Shorthand
-local uwuDNS = getgenv().DNS
-local uwuMain = uwuDNS.General
-local uwuCamMain = uwuDNS.Camlock.Main
-local uwuCamFOV = uwuDNS.Camlock.FOV
-local uwuSilentMain = uwuDNS.Silent.Main
-local uwuSilentFOV = uwuDNS.Silent.FOV
-local uwuTrace = uwuDNS.Tracer
-local uwuAutoPred = uwuDNS.AutoPrediction
-
--- // Optimization
-local vect3 = Vector3.new
-local vect2 = Vector2.new
-local cnew = CFrame.new
-
--- // Libraries
-local NotificationHolder = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Module.Lua"))()
-local Notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Client.Lua"))()
-
--- // Services
-local uis = game:GetService("UserInputService")
-local rs = game:GetService("RunService")
-local plrs = game:GetService("Players")
-local ws = game:GetService("Workspace")
-
--- // Script Variables
-local CToggle = false
-local lplr = plrs.LocalPlayer
-local CTarget = nil
-local CPart = nil
-local SToggle = false
-local STarget = nil
-local SPart = nil
-
--- // Client Variables
-local m = lplr:GetMouse()
-local c = ws.CurrentCamera
-
--- // Notification Function
-local function SendNotification(text)
-    Notification:Notify(
-        {Title = "DNS Rewrite", Description = "pl#0001 - "..text},
-        {OutlineColor = Color3.fromRGB(50,76,110),Time = 2, Type = "image"},
-        {Image = "http://www.roblox.com/asset/?id=6023426923", ImageColor = Color3.fromRGB(50,76,110)}
-    )
-end 
-
--- // Call notification function
-if uwuMain.Notifications then
-    SendNotification("pl#0001 - injecting DNS Rewrite")
-    wait(3.5)
-    SendNotification("pl#0001 - finished injecting DNS Rewrite")
-end
-
--- // Camlock FOV
-local CamlockFOV = Drawing.new("Circle")
-CamlockFOV.Visible = uwuCamFOV.ShowFOV
-CamlockFOV.Thickness = 1
-CamlockFOV.NumSides = 30
-CamlockFOV.Radius = uwuCamFOV.Radius * 3
-CamlockFOV.Color = uwuCamFOV.Color
-CamlockFOV.Filled = uwuCamFOV.Filled
-CamlockFOV.Transparency = uwuCamFOV.Transparency
-
---Silent FOV
-local SilentFOV = Drawing.new("Circle")
-SilentFOV.Visible = uwuSilentFOV.ShowFOV
-SilentFOV.Thickness = 1
-SilentFOV.NumSides = 30
-SilentFOV.Radius = uwuSilentFOV.Radius * 3
-SilentFOV.Color = uwuSilentFOV.Color
-SilentFOV.Filled = uwuSilentFOV.Filled
-SilentFOV.Transparency = uwuSilentFOV.Transparency
-
---Tracer
-local Line = Drawing.new("Line")
-Line.Color = uwuTrace.Color
-Line.Transparency = uwuTrace.Transparency
-Line.Thickness = 1
-Line.Visible = uwuTrace.Visible
-
--- // Script Functions
-local function uwuFindTawget() -- // Find target
-    local d, t = math.huge, nil
-    for _,v in pairs (plrs:GetPlayers()) do
-        local _,os = c:WorldToViewportPoint(v.Character.PrimaryPart.Position)
-        if v ~= lplr and v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health ~= 0 and v.Character:FindFirstChild("HumanoidRootPart") and os then
-            local pos = c:WorldToViewportPoint(v.Character.PrimaryPart.Position)
-            local magnitude = (vect2(pos.X, pos.Y) - vect2(m.X, m.Y + 36)).magnitude
-            if magnitude < d then
-                t = v
-                d = magnitude
-            end
-        end
-    end
-    return t
-end
-
-local function uwuFindPart() -- // Find aimpart
-    local d, p = math.huge, nil
-    if CTarget then
-        for _,v in pairs(CTarget.Character:GetChildren()) do
-            if table.find(uwuCamMain.Parts, v.Name) then
-                local pos = c:WorldToViewportPoint(v.Position)
-                local Magn = (vect2(m.X, m.Y + 36) - vect2(pos.X, pos.Y)).Magnitude
-                if Magn < d then
-                    d = Magn
-                    p = v
-                end
-            end
-        end
-        return p.Name
-    end
-end
-
-local function uwuFindSilentPart() -- // Find aimpart
-    local d, p = math.huge, nil
-    if CTarget then
-        for _,v in pairs(CTarget.Character:GetChildren()) do
-            if table.find(uwuSilentMain.Parts, v.Name) then
-                local pos = c:WorldToViewportPoint(v.Position)
-                local Magn = (vect2(m.X, m.Y + 36) - vect2(pos.X, pos.Y)).Magnitude
-                if Magn < d then
-                    d = Magn
-                    p = v
-                end
-            end
-        end
-        return p.Name
-    end
-end
-
-local function uwuCheckAnti(targ) -- // Anti-aim detection
-    if (targ.Character.HumanoidRootPart.Velocity.Y < -5 and targ.Character.Humanoid:GetState() ~= Enum.HumanoidStateType.Freefall) or targ.Character.HumanoidRootPart.Velocity.Y < -50 then
-        return true
-    elseif targ and (targ.Character.HumanoidRootPart.Velocity.X > 35 or targ.Character.HumanoidRootPart.Velocity.X < -35) then
-        return true
-    elseif targ and targ.Character.HumanoidRootPart.Velocity.Y > 60 then
-        return true
-    elseif targ and (targ.Character.HumanoidRootPart.Velocity.Z > 35 or targ.Character.HumanoidRootPart.Velocity.Z < -35) then
-        return true
-    else
-        return false
-    end
-end
-
-local function InSilentRadiuwus(target, section, fov) -- // Check if player is in the fov
-    if target then
-        local pos = nil
-        if not uwuCheckAnti(target) then
-            pos = c:WorldToViewportPoint(target.Character.PrimaryPart.Position + target.Character.PrimaryPart.Velocity * section.Prediction)
-        else
-            pos = c:WorldToViewportPoint(target.Character.PrimaryPart.Position + ((target.Character.Humanoid.MoveDirection * target.Character.Humanoid.WalkSpeed) * section.Prediction))
-        end
-        local mag = (vect2(m.X, m.Y + 36) - vect2(pos.X, pos.Y)).Magnitude
-        if mag < fov * 3 then
-            return true
-        else
-            return false
-        end
-    end
-end
-
-local function Silent()
-    if STarget then
-        if SPart and InSilentRadiuwus(STarget, uwuSilentMain, SilentFOV.Radius) then
-            if not uwuCheckAnti(STarget) then
-                mainevent:FireServer(namecalltype, STarget.Character[SPart].Position + (STarget.Character[SPart].Velocity * uwuSilentMain.Prediction))
-            else
-                mainevent:FireServer(namecalltype, STarget.Character[SPart].Position + ((STarget.Character.Humanoid.MoveDirection * STarget.Character.Humanoid.WalkSpeed) * uwuSilentMain.Prediction))
-            end
-        end
-    end
-end
-
-
-local function InRadiuwus(target, section, fov) -- // Check if player is in the fov
-    if target then
-        if uwuCamFOV.UseFOV then
-            local pos = nil
-            if not uwuCheckAnti(target) then
-                pos = c:WorldToViewportPoint(target.Character.PrimaryPart.Position + target.Character.PrimaryPart.Velocity * section.Prediction)
-            else
-                pos = c:WorldToViewportPoint(target.Character.PrimaryPart.Position + ((target.Character.Humanoid.MoveDirection * target.Character.Humanoid.WalkSpeed) * section.Prediction))
-            end
-            local mag = (vect2(m.X, m.Y + 36) - vect2(pos.X, pos.Y)).Magnitude
-            if mag < fov * 3 then
-                return true
-            else
-                return false
-            end
-        else
-            return true
-        end
-    end
-end
-
-uis.InputBegan:Connect(function(k,t)
-    if not t then
-        if k.KeyCode == Enum.KeyCode[uwuCamMain.Key:upper()] then
-            CToggle = true
-            CTarget = uwuFindTawget()
-            if uwuMain.Notifications then
-                SendNotification("locked onto "..CTarget.Name)
-            end
-        elseif k.KeyCode == Enum.KeyCode[uwuCamMain.UnlockKey:upper()] then
-            if CToggle then
-                CToggle = false
-                CTarget = nil
-                if uwuMain.Notifications then
-                    SendNotification("unlocked")
-                end
-            end
-        elseif k.KeyCode == Enum.KeyCode[uwuSilentMain.Toggle:upper()] and uwuSilentMain == "Regular" then
-            if SToggle then
-                SToggle = false
-                if uwuMain.Notifications then
-                    SendNotification("silent disabled")
-                end
-            else
-                SToggle = true
-                if uwuMain.Notifications then
-                    SendNotification("silent enabled")
-                end
-            end
-        end
-    end
-end)
-
-rs.RenderStepped:Connect(function()
-    if CTarget then
-        CPart = uwuFindPart()
-        local pos = nil
-        local cum = nil
-        if CTarget.Character.BodyEffects["K.O"].Value == true or lplr.Character.BodyEffects["K.O"].Value == true then
-            CToggle = false
-            CTarget = nil
-        else
-            if uwuCamMain.Shake then
-                if uwuCamMain.PredictMovement then
-                    if not uwuCheckAnti(CTarget) then
-                        cum = CTarget.Character[CPart].Position + CTarget.Character[CPart].Velocity * uwuCamMain.Prediction + (vect3(
-                            math.random(-uwuCamMain.ShakeValue, uwuCamMain.ShakeValue),
-                            math.random(-uwuCamMain.ShakeValue, uwuCamMain.ShakeValue),
-                            math.random(-uwuCamMain.ShakeValue, uwuCamMain.ShakeValue)
-                        ) * 0.1)
-                    else
-                        cum = CTarget.Character[CPart].Position + ((CTarget.Character.Humanoid.MoveDirection * CTarget.Character.Humanoid.WalkSpeed) * uwuCamMain.Prediction + (vect3(
-                            math.random(-uwuCamMain.ShakeValue, uwuCamMain.ShakeValue),
-                            math.random(-uwuCamMain.ShakeValue, uwuCamMain.ShakeValue),
-                            math.random(-uwuCamMain.ShakeValue, uwuCamMain.ShakeValue)
-                        ) * 0.1))
-                    end
-                    pos = c:WorldToViewportPoint(cum)
-                else
-                    cum = CTarget.Character[CPart].Position + (vect3(
-                        math.random(-uwuCamMain.ShakeValue, uwuCamMain.ShakeValue),
-                        math.random(-uwuCamMain.ShakeValue, uwuCamMain.ShakeValue),
-                        math.random(-uwuCamMain.ShakeValue, uwuCamMain.ShakeValue)
-                    ) * 0.1)
-                    pos = c:WorldToViewportPoint(cum)
-                end
-            else
-                if uwuCamMain.PredictMovement then
-                    if not uwuCheckAnti(CTarget) then
-                        cum = CTarget.Character[CPart].Position + CTarget.Character[CPart].Velocity * uwuCamMain.Prediction
-                    else
-                        cum = CTarget.Character[CPart].Position + ((CTarget.Character.Humanoid.MoveDirection * CTarget.Character.Humanoid.WalkSpeed) * uwuCamMain.Prediction)
-                    end
-                    pos = c:WorldToViewportPoint(cum)
-                else
-                    cum = CTarget.Character[CPart].Position
-                    pos = c:WorldToViewportPoint(cum)
-                end
-            end
-            if InRadiuwus(CTarget, uwuCamMain, CamlockFOV.Radius) then
-                local main = nil
-                if uwuCamMain.SmoothLock then
-                    main = cnew(c.CFrame.p, cum)
-                    c.CFrame = c.CFrame:Lerp(main, uwuCamMain.Smoothness, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut)
-                else
-                    c.CFrame = cnew(c.CFrame.p, cum)
-                end
-            end
-            if uwuMain.FOVMode == "Mouse" then
-                if uwuCamFOV.ShowFOV then
-                    CamlockFOV.Position = vect2(m.X, m.Y + 36)
-                end
-                if uwuSilentFOV.ShowFOV then
-                    SilentFOV.Position = vect2(m.X, m.Y + 36)
-                end
-            elseif uwuMain.FOVMode == "PredictionPoint" then
-                if uwuCamFOV.ShowFOV then
-                    CamlockFOV.Position = vect2(pos.X, pos.Y)
-                end
-                if uwuSilentFOV.ShowFOV then
-                    SilentFOV.Position = vect2(pos.X, pos.Y)
-                end
-            end
-            if uwuTrace.Enabled then
-                Line.Visible = true
-                Line.From = vect2(m.X, m.Y + 36)
-                Line.To = vect2(pos.X, pos.Y)
-            end
-        end
-    else
-        CamlockFOV.Position = vect2(m.X, m.Y + 36)
-        SilentFOV.Position = vect2(m.X, m.Y + 36)
-        Line.Visible = false
-    end
-end)
-
-lplr.Character.ChildAdded:Connect(function(tool)
-    if tool:IsA("Tool") then
-        tool.Activated:connect(function()
-            if uwuSilentMain.Mode == "Regular" then
-                if SToggle then
-                    STarget = uwuFindTawget()
-                    if STarget then
-                        SPart = uwuFindSilentPart()
-                        if SPart then
-                            Silent()
-                        end
-                    end
-                end
-            elseif uwuSilentMain.Mode == "Target" then
-                if CToggle then
-                    STarget = CTarget
-                    if STarget then
-                        SPart = uwuFindSilentPart()
-                        if SPart then
-                            Silent()
-                        end
-                    end
-                end
-            end
-        end)
-    end
-end)
-
-lplr.CharacterAdded:Connect(function(char)
-    char.ChildAdded:Connect(function(tool)
-        tool.Activated:connect(function()
-            if uwuSilentMain.Mode == "Regular" then
-                if SToggle then
-                    STarget = uwuFindTawget()
-                    if STarget then
-                        SPart = uwuFindSilentPart()
-                        if SPart then
-                            Silent()
-                        end
-                    end
-                end
-            elseif uwuSilentMain.Mode == "Target" then
-                if CToggle then
-                    STarget = CTarget
-                    if STarget then
-                        SPart = uwuFindSilentPart()
-                        if SPart then
-                            Silent()
-                        end
-                    end
-                end
-            end
-        end)
-    end)
-end)
-
---Auto Prediction
-coroutine.resume(coroutine.create(function()
-    while true do
-        if uwuAutoPred.Enabled then
-            local ping = game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValue()
-            if ping <= 40 then
-                uwuSilentMain.Prediction = uwuAutoPred.ping30_40
-            elseif ping <= 50 then
-                uwuSilentMain.Prediction = uwuAutoPred.ping40_50
-            elseif ping <= 60 then
-                uwuSilentMain.Prediction = uwuAutoPred.ping50_60
-            elseif ping <= 70 then
-                uwuSilentMain.Prediction = uwuAutoPred.ping60_70
-            elseif ping <= 80 then
-                uwuSilentMain.Prediction = uwuAutoPred.ping70_80
-            elseif ping <= 90 then
-                uwuSilentMain.Prediction = uwuAutoPred.ping80_90
-            elseif ping <= 100 then
-                uwuSilentMain.Prediction = uwuAutoPred.ping90_100
-            elseif ping <= 110 then
-                uwuSilentMain.Prediction = uwuAutoPred.ping100_110
-            elseif ping <= 120 then
-                uwuSilentMain.Prediction = uwuAutoPred.ping110_120
-            elseif ping <= 130 then
-                uwuSilentMain.Prediction = uwuAutoPred.ping120_130
-            elseif ping <= 140 then
-                uwuSilentMain.Prediction = uwuAutoPred.ping130_140
-            elseif ping <= 150 then
-                uwuSilentMain.Prediction = uwuAutoPred.ping140_150
-            elseif ping <= 160 then
-                uwuSilentMain.Prediction = uwuAutoPred.ping150_160
-            elseif ping <= 170 then
-                uwuSilentMain.Prediction = uwuAutoPred.ping160_170
-            elseif ping <= 180 then
-                uwuSilentMain.Prediction = uwuAutoPred.ping170_180
-            elseif ping <= 190 then
-                uwuSilentMain.Prediction = uwuAutoPred.ping180_190
-            elseif ping <= 200 then
-                uwuSilentMain.Prediction = uwuAutoPred.ping190_200
-            end
-            task.wait(0.7)
-        end
-    end
-end))
-   end,
-})
-
 
 
 local Button = Tab:CreateButton({
-   Name = "Eternal Streamable W. Resolver",
+   Name = "Precious Streamable V2.0.0",
    Callback = function()
    getgenv().Eternal = {
     Options = {
@@ -2064,7 +1558,775 @@ end
 
 
 local Button = Tab:CreateButton({
-   Name = "Resolver, USE ONLY IF STREAMABLES RESOLVER BREAKS. (X)",
+   Name = "Precious Old Streamable (Resolver Might Be Outdated)",
+   Callback = function()
+   getgenv().Krypton = {
+	newest = {
+		Enabled = true,
+		ToggleKey = "C",
+		Prediction = 0.1325,
+	},
+}
+FOV = {
+	Enabled = true,
+	Size = 50,
+	Color = Color3.fromRGB(255, 255, 255),
+	StickFov = true,
+}
+Text = {
+	Enabled = true,
+	Size = 32,
+	Position = "TopLeft",
+}
+
+local SILENT_TEXT = Drawing.new("Text")
+SILENT_TEXT.Text = Krypton.newest.Enabled and "Silent Aim: ON" or "Silent Aim: OFF"
+SILENT_TEXT.Color = Krypton.newest.Enabled and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(255, 0, 0)
+SILENT_TEXT.Size = 32
+SILENT_TEXT.Outline = true
+SILENT_TEXT.Visible = false
+
+function UpdateText()
+	if Text.Enabled then
+		SILENT_TEXT.Text = Krypton.newest.Enabled and "Silent Aim: ON" or "Silent Aim: OFF"
+		SILENT_TEXT.Color = Krypton.newest.Enabled and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(255, 0, 0)
+		SILENT_TEXT.Visible = Text.Enabled or true
+		SILENT_TEXT.Size = Text.Size or 32
+		SILENT_TEXT.Position = Text.Position:lower() == "bottomright" and Vector2.new(1765, 975)
+			or Text.Position:lower() == "bottomleft" and Vector2.new(15, 975)
+			or Text.Position:lower() == "topright" and Vector2.new(1765, 10)
+			or Text.Position:lower() == "topleft" and Vector2.new(15, 10)
+			or Vector2.new(15, 10)
+	end
+end
+
+local Circle = Drawing.new("Circle")
+local rPoint
+Circle.Transparency = 1
+Circle.Radius = FOV.Size * 3
+Circle.Visible = FOV.Enabled
+Circle.Color = FOV.Color
+Circle.Thickness = 1
+
+-- // resolver
+local smoothingFactor, positionData, currentIndex = 30, {}, 1
+local function calculateVelocityAverage(positionData)
+	local totalVelocity = 0
+	local avgPosition = Vector3.new()
+	local avgTime = 0
+	local len = #positionData
+	if len == 0 then
+		return avgPosition, avgTime
+	end
+	for i = 1, len do
+		local data = positionData[i]
+		if data and data.pos then
+			local velocity = smoothingFactor - i + 1
+			avgPosition += data.pos * velocity
+			avgTime += data.time * velocity
+			totalVelocity += velocity
+		end
+	end
+	avgPosition = avgPosition / totalVelocity
+	avgTime = avgTime / totalVelocity
+	return avgPosition, avgTime
+end
+local function smoothVelocity(character)
+	local currentPos = character.HumanoidRootPart.Position
+	local currentTick = tick()
+	positionData[currentIndex] = {
+		pos = currentPos,
+		time = currentTick,
+	}
+	currentIndex = (currentIndex % smoothingFactor) + 1
+	local avgPosition, avgTime = calculateVelocityAverage(positionData)
+	local prevData = positionData[currentIndex]
+	if prevData and prevData.pos then
+		local Velocity = (currentPos - prevData.pos) / (currentTick - prevData.time)
+		return Velocity
+	end
+end
+
+-- // mem spoofer
+pcall(function()
+	local spoofer, updating = false
+	for i, v in pairs(game:GetService("CoreGui").RobloxGui.PerformanceStats:GetChildren()) do
+		v.Name = i
+	end
+	game:GetService("CoreGui").RobloxGui.PerformanceStats["1"].StatsMiniTextPanelClass.ValueLabel
+		:GetPropertyChangedSignal("Text")
+		:Connect(function()
+			if not updating then
+				updating = true
+				spoofer = math.random(800, 900) .. "." .. math.random(10, 99) .. "MB"
+				game:GetService("CoreGui").RobloxGui.PerformanceStats["1"].StatsMiniTextPanelClass.ValueLabel.Text =
+					spoofer
+				updating = false
+			end
+		end)
+end)
+
+function wallCheck(position, ignoreList)
+	return not workspace:FindPartOnRayWithIgnoreList(
+		Ray.new(workspace.CurrentCamera.CFrame.p, position - workspace.CurrentCamera.CFrame.p),
+		ignoreList
+	)
+end
+
+function KnockedCheck(_)
+	return _.Character.BodyEffects["K.O"].Value ~= true
+end
+
+function GrabbedCheck(_)
+	return not _.Character:FindFirstChild("GRABBING_CONSTRAINT")
+end
+
+game:GetService("UserInputService").InputBegan:Connect(function(_, __)
+	if _.KeyCode.Name == Krypton.newest.ToggleKey and __ == false then
+		Krypton.newest.Enabled = not Krypton.newest.Enabled
+	end
+end)
+
+function getClosestPart(Target)
+	if Target and Target:GetChildren() then
+		local closestpart, closdist = nil, math.huge
+		local camera = workspace.CurrentCamera
+		local mousepos = game.Players.LocalPlayer:GetMouse()
+		local circleRadius = Circle.Radius
+		local children = Target:GetChildren()
+		local i = 1
+		while i <= #children do
+			local child = children[i]
+			if child:IsA("BasePart") then
+				local them, vis = camera:WorldToScreenPoint(child.Position)
+				local magnitude = (Vector2.new(them.X, them.Y) - Vector2.new(mousepos.X, mousepos.Y)).magnitude
+				if vis and circleRadius > magnitude and magnitude < closdist then
+					closestpart, closdist = child, magnitude
+				end
+			end
+			i = i + 1
+		end
+		return closestpart
+	end
+end
+
+-- // get closest point (old and bad)
+function cls(target)
+	local selectedPart = getClosestPart(self.Character)
+	if selectedPart then
+		local mouseHit = game.Players.LocalPlayer:GetMouse().hit
+		local transform = selectedPart.CFrame:pointToObjectSpace(mouseHit.p)
+		local halfSize = selectedPart.Size / 2
+		local pointIsInside = math.abs(transform.x) <= halfSize.x
+			and math.abs(transform.y) <= halfSize.y
+			and math.abs(transform.z) <= halfSize.z
+		if pointIsInside then
+			return mouseHit.p
+		end
+		local result = Vector3.new(
+			(transform.x < -halfSize.x) and -halfSize.x or ((transform.x > halfSize.x) and halfSize.x or transform.x),
+			(transform.y < -halfSize.y) and -halfSize.y or ((transform.y > halfSize.y) and halfSize.y or transform.y),
+			(transform.z < -halfSize.z) and -halfSize.z or ((transform.z > halfSize.z) and halfSize.z or transform.z)
+		)
+		local endResult = Vector3.new(math.floor(result.x), math.floor(result.y), math.floor(result.z))
+		return selectedPart.CFrame * endResult
+	end
+end
+
+function getClosestPlayer()
+	local closestPlayer, closestDistance = nil, 1 / 0
+	local camera = workspace.CurrentCamera
+	local localPlayer = game.Players.LocalPlayer
+	local mouse = localPlayer:GetMouse()
+	local mousePos = mouse.hit.p
+	local players = game:GetService("Players"):GetPlayers()
+	local knockedCheck = KnockedCheck
+	local grabbedCheck = GrabbedCheck
+	local wallCheck = wallCheck
+	local i = 1
+	while i <= #players do
+		local player = players[i]
+		if player ~= localPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+			local rootPart = player.Character.HumanoidRootPart
+			local OnScreen = camera:WorldToViewportPoint(rootPart.Position)
+			local distance = (rootPart.Position - mousePos).magnitude
+			if
+				distance < closestDistance
+				and knockedCheck(player)
+				and grabbedCheck(player)
+				and OnScreen
+				and wallCheck(rootPart.Position, { localPlayer, player.Character })
+			then
+				closestPlayer = player
+				closestDistance = distance
+			end
+		end
+		i = i + 1
+	end
+	return closestPlayer
+end
+
+function isAnti()
+	local calculateVelocityAverage = smoothVelocity(self.Character)
+	return self.Character.HumanoidRootPart.Velocity.Magnitude > 50
+			and calculateVelocityAverage * Krypton.newest.Prediction
+		or self.Character.HumanoidRootPart.Velocity * Krypton.newest.Prediction
+end
+
+-- // ugly ik
+game.RunService.Heartbeat:Connect(function()
+	local vector2Pos = game:GetService("UserInputService"):GetMouseLocation()
+	if self and Krypton.newest.Enabled then
+		rPoint = cls(self.Character)
+	end
+	if self and FOV.StickFov and Krypton.newest.Enabled then
+		local pos = workspace.CurrentCamera:worldToViewportPoint(self.Character.HumanoidRootPart.Position)
+		Circle.Position = Vector2.new(pos.X, pos.Y)
+	else
+		Circle.Position = Vector2.new(vector2Pos.X, vector2Pos.Y)
+	end
+	if Krypton.newest.Enabled then
+		self = getClosestPlayer()
+	end
+	UpdateText()
+	if self and Krypton.newest.Enabled then
+		getgenv().Result = getClosestPart(self.Character)
+	end
+end)
+
+local __index
+__index = hookmetamethod(game, "__index", function(t, k)
+	if t:IsA("Mouse") and k == "Hit" or k == "Target" then
+		if self ~= nil and Result ~= nil and rPoint and Krypton.newest.Enabled then
+			local Hit = CFrame.new(rPoint) + isAnti()
+			return (k == "Hit" and Hit)
+		end
+	end
+	return __index(t, k)
+end)
+   end,
+})
+
+
+
+
+local Button = Tab:CreateButton({
+   Name = "Precious Streamable V3.0.0",
+   Callback = function()
+   getgenv().DNS = {
+    General = {
+        Notifications = true,
+        FOVMode = "PredictionPoint"
+    },
+    Silent = {
+        Main = {
+            Enabled = true,
+            Mode = "Target",
+            Toggle = "C",
+            Prediction = 0.12471,
+            Parts = {"Head","LowerTorso","UpperTorso"}
+        },
+        FOV = {
+            ShowFOV = true,
+            Radius = 70,
+            Color = Color3.fromRGB(0, 71, 171),
+            Filled = false,
+            Transparency = 0.8
+        }
+    },
+    Camlock = {
+        Main = {
+            Enabled = true,
+            Key = "Q",
+            UnlockKey = "T",
+            SmoothLock = true,
+            Smoothness = 0.067,
+            PredictMovement = true,
+            Prediction = 0.143,
+            Shake = true,
+            ShakeValue = 1,
+            Parts = {"Head"}
+        },
+        FOV = {
+            UseFOV = true,
+            ShowFOV = false,
+            Radius = 120,
+            Color = Color3.fromRGB(0, 71, 171),
+            Filled = false,
+            Transparency = 0.4
+        }
+    },
+    Tracer = {
+        Enabled = false,
+        Color = Color3.fromRGB(137, 207, 240),
+        Transparency = 0.4,
+        Visible = false
+    },
+    AutoPrediction = { -- the numbers are pings ( this is for silent + Current sets not recommended )
+        Enabled = true,
+        ping20_30 = 0.12588,
+        ping30_40 = 0.11911,
+        ping40_50 = 0.12471,
+        ping50_60 = 0.12766,
+        ping60_70 = 0.12731,
+        ping70_80 = 0.12951,
+        ping80_90 = 0.13181,
+        ping90_100 = 0.138,
+        ping100_110 = 0.146,
+        ping110_120 = 0.1367,
+        ping120_130 = 0.1401,
+        ping130_140 = 0.1437,
+        ping140_150 = 0.153,
+        ping150_160 = 0.1514,
+        ping160_170 = 0.1663,
+        ping170_180 = 0.1672,
+        ping180_190 = 0.1848,
+        ping190_200 = 0.1865,
+    }
+}
+
+local function getnamecall()
+    if game.PlaceId == 2788229376 then
+        return "UpdateMousePos"
+    elseif game.PlaceId == 5602055394 or game.PlaceId == 7951883376 then
+        return "MousePos"
+    elseif game.PlaceId == 9825515356 then
+        return "GetMousePos"
+    end
+end
+
+local namecalltype = getnamecall()
+
+function MainEventLocate()
+    for _,v in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
+        if v.Name == "MainEvent" then
+            return v
+        end
+    end
+end
+
+local mainevent = MainEventLocate()
+
+-- // Shorthand
+local uwuDNS = getgenv().DNS
+local uwuMain = uwuDNS.General
+local uwuCamMain = uwuDNS.Camlock.Main
+local uwuCamFOV = uwuDNS.Camlock.FOV
+local uwuSilentMain = uwuDNS.Silent.Main
+local uwuSilentFOV = uwuDNS.Silent.FOV
+local uwuTrace = uwuDNS.Tracer
+local uwuAutoPred = uwuDNS.AutoPrediction
+
+-- // Optimization
+local vect3 = Vector3.new
+local vect2 = Vector2.new
+local cnew = CFrame.new
+
+-- // Libraries
+local NotificationHolder = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Module.Lua"))()
+local Notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Client.Lua"))()
+
+-- // Services
+local uis = game:GetService("UserInputService")
+local rs = game:GetService("RunService")
+local plrs = game:GetService("Players")
+local ws = game:GetService("Workspace")
+
+-- // Script Variables
+local CToggle = false
+local lplr = plrs.LocalPlayer
+local CTarget = nil
+local CPart = nil
+local SToggle = false
+local STarget = nil
+local SPart = nil
+
+-- // Client Variables
+local m = lplr:GetMouse()
+local c = ws.CurrentCamera
+
+-- // Notification Function
+local function SendNotification(text)
+    Notification:Notify(
+        {Title = "Precious Hub", Description = "pl#0001 - "..text},
+        {OutlineColor = Color3.fromRGB(50,76,110),Time = 2, Type = "image"},
+        {Image = "http://www.roblox.com/asset/?id=6023426923", ImageColor = Color3.fromRGB(50,76,110)}
+    )
+end 
+
+-- // Call notification function
+if uwuMain.Notifications then
+    SendNotification("pl#0001 - Injecting Precious Streamable V3.0.0")
+    wait(3.5)
+    SendNotification("pl#0001 - Finished Injecting Precious Streamable V3.0.0")
+end
+
+-- // Camlock FOV
+local CamlockFOV = Drawing.new("Circle")
+CamlockFOV.Visible = uwuCamFOV.ShowFOV
+CamlockFOV.Thickness = 1
+CamlockFOV.NumSides = 30
+CamlockFOV.Radius = uwuCamFOV.Radius * 3
+CamlockFOV.Color = uwuCamFOV.Color
+CamlockFOV.Filled = uwuCamFOV.Filled
+CamlockFOV.Transparency = uwuCamFOV.Transparency
+
+--Silent FOV
+local SilentFOV = Drawing.new("Circle")
+SilentFOV.Visible = uwuSilentFOV.ShowFOV
+SilentFOV.Thickness = 1
+SilentFOV.NumSides = 30
+SilentFOV.Radius = uwuSilentFOV.Radius * 3
+SilentFOV.Color = uwuSilentFOV.Color
+SilentFOV.Filled = uwuSilentFOV.Filled
+SilentFOV.Transparency = uwuSilentFOV.Transparency
+
+--Tracer
+local Line = Drawing.new("Line")
+Line.Color = uwuTrace.Color
+Line.Transparency = uwuTrace.Transparency
+Line.Thickness = 1
+Line.Visible = uwuTrace.Visible
+
+-- // Script Functions
+local function uwuFindTawget() -- // Find target
+    local d, t = math.huge, nil
+    for _,v in pairs (plrs:GetPlayers()) do
+        local _,os = c:WorldToViewportPoint(v.Character.PrimaryPart.Position)
+        if v ~= lplr and v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health ~= 0 and v.Character:FindFirstChild("HumanoidRootPart") and os then
+            local pos = c:WorldToViewportPoint(v.Character.PrimaryPart.Position)
+            local magnitude = (vect2(pos.X, pos.Y) - vect2(m.X, m.Y + 36)).magnitude
+            if magnitude < d then
+                t = v
+                d = magnitude
+            end
+        end
+    end
+    return t
+end
+
+local function uwuFindPart() -- // Find aimpart
+    local d, p = math.huge, nil
+    if CTarget then
+        for _,v in pairs(CTarget.Character:GetChildren()) do
+            if table.find(uwuCamMain.Parts, v.Name) then
+                local pos = c:WorldToViewportPoint(v.Position)
+                local Magn = (vect2(m.X, m.Y + 36) - vect2(pos.X, pos.Y)).Magnitude
+                if Magn < d then
+                    d = Magn
+                    p = v
+                end
+            end
+        end
+        return p.Name
+    end
+end
+
+local function uwuFindSilentPart() -- // Find aimpart
+    local d, p = math.huge, nil
+    if CTarget then
+        for _,v in pairs(CTarget.Character:GetChildren()) do
+            if table.find(uwuSilentMain.Parts, v.Name) then
+                local pos = c:WorldToViewportPoint(v.Position)
+                local Magn = (vect2(m.X, m.Y + 36) - vect2(pos.X, pos.Y)).Magnitude
+                if Magn < d then
+                    d = Magn
+                    p = v
+                end
+            end
+        end
+        return p.Name
+    end
+end
+
+local function uwuCheckAnti(targ) -- // Anti-aim detection
+    if (targ.Character.HumanoidRootPart.Velocity.Y < -5 and targ.Character.Humanoid:GetState() ~= Enum.HumanoidStateType.Freefall) or targ.Character.HumanoidRootPart.Velocity.Y < -50 then
+        return true
+    elseif targ and (targ.Character.HumanoidRootPart.Velocity.X > 35 or targ.Character.HumanoidRootPart.Velocity.X < -35) then
+        return true
+    elseif targ and targ.Character.HumanoidRootPart.Velocity.Y > 60 then
+        return true
+    elseif targ and (targ.Character.HumanoidRootPart.Velocity.Z > 35 or targ.Character.HumanoidRootPart.Velocity.Z < -35) then
+        return true
+    else
+        return false
+    end
+end
+
+local function InSilentRadiuwus(target, section, fov) -- // Check if player is in the fov
+    if target then
+        local pos = nil
+        if not uwuCheckAnti(target) then
+            pos = c:WorldToViewportPoint(target.Character.PrimaryPart.Position + target.Character.PrimaryPart.Velocity * section.Prediction)
+        else
+            pos = c:WorldToViewportPoint(target.Character.PrimaryPart.Position + ((target.Character.Humanoid.MoveDirection * target.Character.Humanoid.WalkSpeed) * section.Prediction))
+        end
+        local mag = (vect2(m.X, m.Y + 36) - vect2(pos.X, pos.Y)).Magnitude
+        if mag < fov * 3 then
+            return true
+        else
+            return false
+        end
+    end
+end
+
+local function Silent()
+    if STarget then
+        if SPart and InSilentRadiuwus(STarget, uwuSilentMain, SilentFOV.Radius) then
+            if not uwuCheckAnti(STarget) then
+                mainevent:FireServer(namecalltype, STarget.Character[SPart].Position + (STarget.Character[SPart].Velocity * uwuSilentMain.Prediction))
+            else
+                mainevent:FireServer(namecalltype, STarget.Character[SPart].Position + ((STarget.Character.Humanoid.MoveDirection * STarget.Character.Humanoid.WalkSpeed) * uwuSilentMain.Prediction))
+            end
+        end
+    end
+end
+
+
+local function InRadiuwus(target, section, fov) -- // Check if player is in the fov
+    if target then
+        if uwuCamFOV.UseFOV then
+            local pos = nil
+            if not uwuCheckAnti(target) then
+                pos = c:WorldToViewportPoint(target.Character.PrimaryPart.Position + target.Character.PrimaryPart.Velocity * section.Prediction)
+            else
+                pos = c:WorldToViewportPoint(target.Character.PrimaryPart.Position + ((target.Character.Humanoid.MoveDirection * target.Character.Humanoid.WalkSpeed) * section.Prediction))
+            end
+            local mag = (vect2(m.X, m.Y + 36) - vect2(pos.X, pos.Y)).Magnitude
+            if mag < fov * 3 then
+                return true
+            else
+                return false
+            end
+        else
+            return true
+        end
+    end
+end
+
+uis.InputBegan:Connect(function(k,t)
+    if not t then
+        if k.KeyCode == Enum.KeyCode[uwuCamMain.Key:upper()] then
+            CToggle = true
+            CTarget = uwuFindTawget()
+            if uwuMain.Notifications then
+                SendNotification("Precious Hub Locked Into "..CTarget.Name)
+            end
+        elseif k.KeyCode == Enum.KeyCode[uwuCamMain.UnlockKey:upper()] then
+            if CToggle then
+                CToggle = false
+                CTarget = nil
+                if uwuMain.Notifications then
+                    SendNotification("Unlocked")
+                end
+            end
+        elseif k.KeyCode == Enum.KeyCode[uwuSilentMain.Toggle:upper()] and uwuSilentMain == "Regular" then
+            if SToggle then
+                SToggle = false
+                if uwuMain.Notifications then
+                    SendNotification("Streamable Disabled")
+                end
+            else
+                SToggle = true
+                if uwuMain.Notifications then
+                    SendNotification("Slient Enabled")
+                end
+            end
+        end
+    end
+end)
+
+rs.RenderStepped:Connect(function()
+    if CTarget then
+        CPart = uwuFindPart()
+        local pos = nil
+        local cum = nil
+        if CTarget.Character.BodyEffects["K.O"].Value == true or lplr.Character.BodyEffects["K.O"].Value == true then
+            CToggle = false
+            CTarget = nil
+        else
+            if uwuCamMain.Shake then
+                if uwuCamMain.PredictMovement then
+                    if not uwuCheckAnti(CTarget) then
+                        cum = CTarget.Character[CPart].Position + CTarget.Character[CPart].Velocity * uwuCamMain.Prediction + (vect3(
+                            math.random(-uwuCamMain.ShakeValue, uwuCamMain.ShakeValue),
+                            math.random(-uwuCamMain.ShakeValue, uwuCamMain.ShakeValue),
+                            math.random(-uwuCamMain.ShakeValue, uwuCamMain.ShakeValue)
+                        ) * 0.1)
+                    else
+                        cum = CTarget.Character[CPart].Position + ((CTarget.Character.Humanoid.MoveDirection * CTarget.Character.Humanoid.WalkSpeed) * uwuCamMain.Prediction + (vect3(
+                            math.random(-uwuCamMain.ShakeValue, uwuCamMain.ShakeValue),
+                            math.random(-uwuCamMain.ShakeValue, uwuCamMain.ShakeValue),
+                            math.random(-uwuCamMain.ShakeValue, uwuCamMain.ShakeValue)
+                        ) * 0.1))
+                    end
+                    pos = c:WorldToViewportPoint(cum)
+                else
+                    cum = CTarget.Character[CPart].Position + (vect3(
+                        math.random(-uwuCamMain.ShakeValue, uwuCamMain.ShakeValue),
+                        math.random(-uwuCamMain.ShakeValue, uwuCamMain.ShakeValue),
+                        math.random(-uwuCamMain.ShakeValue, uwuCamMain.ShakeValue)
+                    ) * 0.1)
+                    pos = c:WorldToViewportPoint(cum)
+                end
+            else
+                if uwuCamMain.PredictMovement then
+                    if not uwuCheckAnti(CTarget) then
+                        cum = CTarget.Character[CPart].Position + CTarget.Character[CPart].Velocity * uwuCamMain.Prediction
+                    else
+                        cum = CTarget.Character[CPart].Position + ((CTarget.Character.Humanoid.MoveDirection * CTarget.Character.Humanoid.WalkSpeed) * uwuCamMain.Prediction)
+                    end
+                    pos = c:WorldToViewportPoint(cum)
+                else
+                    cum = CTarget.Character[CPart].Position
+                    pos = c:WorldToViewportPoint(cum)
+                end
+            end
+            if InRadiuwus(CTarget, uwuCamMain, CamlockFOV.Radius) then
+                local main = nil
+                if uwuCamMain.SmoothLock then
+                    main = cnew(c.CFrame.p, cum)
+                    c.CFrame = c.CFrame:Lerp(main, uwuCamMain.Smoothness, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut)
+                else
+                    c.CFrame = cnew(c.CFrame.p, cum)
+                end
+            end
+            if uwuMain.FOVMode == "Mouse" then
+                if uwuCamFOV.ShowFOV then
+                    CamlockFOV.Position = vect2(m.X, m.Y + 36)
+                end
+                if uwuSilentFOV.ShowFOV then
+                    SilentFOV.Position = vect2(m.X, m.Y + 36)
+                end
+            elseif uwuMain.FOVMode == "PredictionPoint" then
+                if uwuCamFOV.ShowFOV then
+                    CamlockFOV.Position = vect2(pos.X, pos.Y)
+                end
+                if uwuSilentFOV.ShowFOV then
+                    SilentFOV.Position = vect2(pos.X, pos.Y)
+                end
+            end
+            if uwuTrace.Enabled then
+                Line.Visible = true
+                Line.From = vect2(m.X, m.Y + 36)
+                Line.To = vect2(pos.X, pos.Y)
+            end
+        end
+    else
+        CamlockFOV.Position = vect2(m.X, m.Y + 36)
+        SilentFOV.Position = vect2(m.X, m.Y + 36)
+        Line.Visible = false
+    end
+end)
+
+lplr.Character.ChildAdded:Connect(function(tool)
+    if tool:IsA("Tool") then
+        tool.Activated:connect(function()
+            if uwuSilentMain.Mode == "Regular" then
+                if SToggle then
+                    STarget = uwuFindTawget()
+                    if STarget then
+                        SPart = uwuFindSilentPart()
+                        if SPart then
+                            Silent()
+                        end
+                    end
+                end
+            elseif uwuSilentMain.Mode == "Target" then
+                if CToggle then
+                    STarget = CTarget
+                    if STarget then
+                        SPart = uwuFindSilentPart()
+                        if SPart then
+                            Silent()
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end)
+
+lplr.CharacterAdded:Connect(function(char)
+    char.ChildAdded:Connect(function(tool)
+        tool.Activated:connect(function()
+            if uwuSilentMain.Mode == "Regular" then
+                if SToggle then
+                    STarget = uwuFindTawget()
+                    if STarget then
+                        SPart = uwuFindSilentPart()
+                        if SPart then
+                            Silent()
+                        end
+                    end
+                end
+            elseif uwuSilentMain.Mode == "Target" then
+                if CToggle then
+                    STarget = CTarget
+                    if STarget then
+                        SPart = uwuFindSilentPart()
+                        if SPart then
+                            Silent()
+                        end
+                    end
+                end
+            end
+        end)
+    end)
+end)
+
+--Auto Prediction
+coroutine.resume(coroutine.create(function()
+    while true do
+        if uwuAutoPred.Enabled then
+            local ping = game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValue()
+            if ping <= 40 then
+                uwuSilentMain.Prediction = uwuAutoPred.ping30_40
+            elseif ping <= 50 then
+                uwuSilentMain.Prediction = uwuAutoPred.ping40_50
+            elseif ping <= 60 then
+                uwuSilentMain.Prediction = uwuAutoPred.ping50_60
+            elseif ping <= 70 then
+                uwuSilentMain.Prediction = uwuAutoPred.ping60_70
+            elseif ping <= 80 then
+                uwuSilentMain.Prediction = uwuAutoPred.ping70_80
+            elseif ping <= 90 then
+                uwuSilentMain.Prediction = uwuAutoPred.ping80_90
+            elseif ping <= 100 then
+                uwuSilentMain.Prediction = uwuAutoPred.ping90_100
+            elseif ping <= 110 then
+                uwuSilentMain.Prediction = uwuAutoPred.ping100_110
+            elseif ping <= 120 then
+                uwuSilentMain.Prediction = uwuAutoPred.ping110_120
+            elseif ping <= 130 then
+                uwuSilentMain.Prediction = uwuAutoPred.ping120_130
+            elseif ping <= 140 then
+                uwuSilentMain.Prediction = uwuAutoPred.ping130_140
+            elseif ping <= 150 then
+                uwuSilentMain.Prediction = uwuAutoPred.ping140_150
+            elseif ping <= 160 then
+                uwuSilentMain.Prediction = uwuAutoPred.ping150_160
+            elseif ping <= 170 then
+                uwuSilentMain.Prediction = uwuAutoPred.ping160_170
+            elseif ping <= 180 then
+                uwuSilentMain.Prediction = uwuAutoPred.ping170_180
+            elseif ping <= 190 then
+                uwuSilentMain.Prediction = uwuAutoPred.ping180_190
+            elseif ping <= 200 then
+                uwuSilentMain.Prediction = uwuAutoPred.ping190_200
+            end
+            task.wait(0.7)
+        end
+    end
+end))
+   end,
+})
+
+
+
+
+local Button = Tab:CreateButton({
+   Name = "Universal Resolver, (USE ONLY IF RESOLVERS DONT WORK) (X Toggle)",
    Callback = function()
    Actyrn7104 = {
 	Enabled = true, -- If the resolver is enabled or disabled
@@ -2081,92 +2343,217 @@ loadstring(game:HttpGet("https://pastebin.com/raw/b0Qaf3aH"))()
 
 
 
-local Tab = MainWindow:CreateTab("Anti Locks", 4483362458) -- Title, Image
+local Section = Tab:CreateSection("Streamables No Resolver + Cam Locks")
 
 
 
 local Button = Tab:CreateButton({
-   Name = "Underground (Z)",
+   Name = "Random Streamable",
    Callback = function()
-   local Toggled = false
-local KeyCode = 'z'
-
-
-function AA()
-    local oldVelocity = game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity
-    game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(oldVelocity.X, -70, oldVelocity.Z)
-    game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(oldVelocity.X, oldVelocity.Y, oldVelocity.Z)
-    game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(oldVelocity.X, -70, oldVelocity.Z)
-    game.Players.LocalPlayer.Character.Humanoid.HipHeight = 4.14
+   if not game:IsLoaded() then
+    game.Loaded:Wait()
 end
 
-game:GetService('UserInputService').InputBegan:Connect(function(Key)
-    if Key.KeyCode == Enum.KeyCode[KeyCode:upper()] and not game:GetService('UserInputService'):GetFocusedTextBox() then
-        if Toggled then
-            Toggled = false
-            game.Players.LocalPlayer.Character.Humanoid.HipHeight = 1.85
+local Settings = {
+    Silent = {
+        Enabled = true,
+        Part = "HumanoidRootPart",
+        Pred = 0.12223,
+        ClosestPart = true,
+    },
+    FOV = {
+        Visible = true,
+        Radius = 40
+    }
+}
 
-        elseif not Toggled then
-            Toggled = true
+local Players, Client, Mouse, RS, Camera =
+    game:GetService("Players"),
+    game:GetService("Players").LocalPlayer,
+    game:GetService("Players").LocalPlayer:GetMouse(),
+    game:GetService("RunService"),
+    game.Workspace.CurrentCamera
 
-            while Toggled do
-                AA()
-                task.wait()
+local Circle = Drawing.new("Circle")
+Circle.Color = Color3.new(0,255,255)
+Circle.Thickness = 1
+
+local UpdateFOV = function ()
+    if (not Circle) then
+        return Circle
+    end
+    Circle.Visible = Settings.FOV["Visible"]
+    Circle.Radius = Settings.FOV["Radius"] * 3
+    Circle.Position = Vector2.new(Mouse.X, Mouse.Y + (game:GetService("GuiService"):GetGuiInset().Y))
+    return Circle
+end
+
+RS.Heartbeat:Connect(UpdateFOV)
+
+ClosestPlrFromMouse = function()
+    local Target, Closest = nil, 1/0
+ 
+    for _ ,v in pairs(Players:GetPlayers()) do
+        if (v.Character and v ~= Client and v.Character:FindFirstChild("HumanoidRootPart")) then
+            local Position, OnScreen = Camera:WorldToScreenPoint(v.Character.HumanoidRootPart.Position)
+            local Distance = (Vector2.new(Position.X, Position.Y) - Vector2.new(Mouse.X, Mouse.Y)).Magnitude
+
+            if (Circle.Radius > Distance and Distance < Closest and OnScreen) then
+                Closest = Distance
+                Target = v
+            end
+        end
+    end
+    return Target
+end
+
+local WTS = function (Object)
+    local ObjectVector = Camera:WorldToScreenPoint(Object.Position)
+    return Vector2.new(ObjectVector.X, ObjectVector.Y)
+end
+
+local IsOnScreen = function (Object)
+    local IsOnScreen = Camera:WorldToScreenPoint(Object.Position)
+    return IsOnScreen
+end
+
+local FilterObjs = function (Object)
+    if string.find(Object.Name, "Gun") then
+        return
+    end
+    if table.find({"Part", "MeshPart", "BasePart"}, Object.ClassName) then
+        return true
+    end
+end
+
+local GetClosestBodyPart = function (character)
+    local ClosestDistance = 1/0
+    local BodyPart = nil
+    if (character and character:GetChildren()) then
+        for _,  x in next, character:GetChildren() do
+            if FilterObjs(x) and IsOnScreen(x) then
+                local Distance = (WTS(x) - Vector2.new(Mouse.X, Mouse.Y)).Magnitude
+                if (Circle.Radius > Distance and Distance < ClosestDistance) then
+                    ClosestDistance = Distance
+                    BodyPart = x
+                end
+            end
+        end
+    end
+    return BodyPart
+end
+
+local Prey
+
+task.spawn(function ()
+    while task.wait() do
+        if Prey then
+            if Settings.Silent.Enabled and Settings.Silent.ClosestPart == true then
+                Settings.Silent["Part"] = tostring(GetClosestBodyPart(Prey.Character))
             end
         end
     end
 end)
-   end,
-})
 
+local grmt = getrawmetatable(game)
+local backupindex = grmt.__index
+setreadonly(grmt, false)
 
+grmt.__index = newcclosure(function(self, v)
+    if (Settings.Silent.Enabled and Mouse and tostring(v) == "Hit") then
 
+        Prey = ClosestPlrFromMouse()
 
-local Button = Tab:CreateButton({
-   Name = "Sky",
-   Callback = function()
-   getgenv().Sky = true 
-getgenv().SkyAmount = 90
-
-game:GetService("RunService").heartbeat:Connect(function()
-    if getgenv().Sky ~= false then 
-    local vel = game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity
-    game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,      getgenv().SkyAmount,0) 
-    game:GetService("RunService").RenderStepped:Wait()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = vel
-    end 
+        if Prey then
+            local endpoint = game.Players[tostring(Prey)].Character[Settings.Silent["Part"]].CFrame + (
+                game.Players[tostring(Prey)].Character[Settings.Silent["Part"]].Velocity * Settings.Silent.Pred
+            )
+            return (tostring(v) == "Hit" and endpoint)
+        end
+    end
+    return backupindex(self, v)
 end)
    end,
 })
 
 
 
+
 local Button = Tab:CreateButton({
-   Name = "Mouse Control",
+   Name = "Earths Streamable (V Toggle)",
    Callback = function()
-   local mouse = game.Players.LocalPlayer:GetMouse()
-getgenv().mouse_control = true
-game:GetService("RunService").Heartbeat:Connect(
-    function()
-        if mouse_control ~= false then
-            local vel = game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity
+   local earth
+load.earth.streamable = true
+synapse("injecting..")
+-- // script made by earth
+-- // script made by earth
+-- // script made by earth
+----\ //\ \
+---- \ // \ //
+---- \ // \ //
+---- \// \//
+-- // EarthW -- // EarthW -- // EarthW -- // EarthW -- // EarthW -- // EarthW
+-- // EarthW-- // EarthW-- // EarthW-- // EarthW-- // EarthW-- // EarthW
+-- \ EarthW-- \ EarthW-- \ EarthW-- \ EarthW-- \ EarthW-- \ EarthW
+-- // EarthW -- // EarthW -- // EarthW -- // EarthW -- // EarthW -- // EarthW
+-- // EarthW -- // EarthW -- // EarthW -- // EarthW -- // EarthW -- // EarthW
+-- // EarthW-- // EarthW-- // EarthW-- // EarthW-- // EarthW-- // EarthW
+-- \ EarthW-- \ EarthW-- \ EarthW-- \ EarthW-- \ EarthW-- \ EarthW
+--toggle button (v)
+local hotkey = "v" -- toggle key
+local mouse = game.Players.LocalPlayer:GetMouse()
 
-            game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity =
-                Vector3.new(mouse.Hit.X, mouse.Hit.Y, mouse.Hit.Z)
 
-            game:GetService("RunService").RenderStepped:Wait()
-            game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = vel
-        end
-    end
-)
+mouse.KeyDown:Connect(function(key)
+if key == hotkey then
+if getgenv().DaHoodSettings.SilentAim == true then
+getgenv().DaHoodSettings.SilentAim = false
+else
+getgenv().DaHoodSettings.SilentAim = true
+end
+end
+end)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/B3X2/ZP-WARE/main/v2"))()
+DaHoodSettings.Prediction = 0.120
+--change parts if need
+EarthParts = true
+EarthParts = {
+"Head",
+"HumanoidRootPart",
+"LeftLowerLeg",
+"LeftFoot",
+"LeftArm",
+"RightArm",
+"LowerTorso"
+}
+FOVCircle = 20
+HitChance = 115
+ShowFOV = true
+--dont show fov idoit
    end,
 })
 
 
 
 
+local Section = Tab:CreateSection("Universal Unban")
+
+
+
+local Label = Tab:CreateLabel("Dahood Universal Unban Is Currently Down Due To New Updates + Roblox Byfron Update")
+
+
+
+local Tab = MainWindow:CreateTab("Anti Locks", 4483362458) -- Title, Image
+
+
+
+local Section = Tab:CreateSection("Desync Anti")
+
+
+
 local Button = Tab:CreateButton({
-   Name = "Desync",
+   Name = "Desync (Resolveable)",
    Callback = function()
    getgenv().VelocityChanger = true
 getgenv().Velocity = Vector3.new(0,-500,0)
@@ -2207,14 +2594,16 @@ while true do
    
    Heartbeat:wait()
 end
+
    end,
 })
 
 
 
 
+
 local Button = Tab:CreateButton({
-   Name = "Walkable Desync, USE IF LOCKER RESOLVES UR ANTI",
+   Name = "Walkable Desync (Unresolveable)",
    Callback = function()
    _G.Endo = true
 
@@ -2238,6 +2627,252 @@ game.RunService.Heartbeat:Connect(
    end,
 })
 
+
+
+
+
+local Section = Tab:CreateSection("Random Anti Locks")
+
+
+
+
+local Button = Tab:CreateButton({
+   Name = "Sky",
+   Callback = function()
+   getgenv().Sky = true 
+getgenv().SkyAmount = 90
+
+game:GetService("RunService").heartbeat:Connect(function()
+    if getgenv().Sky ~= false then 
+    local vel = game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity
+    game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,      getgenv().SkyAmount,0) 
+    game:GetService("RunService").RenderStepped:Wait()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = vel
+    end 
+end)
+   end,
+})
+
+
+
+
+local Button = Tab:CreateButton({
+   Name = "Underground (Z Toggle)",
+   Callback = function()
+   local Toggled = false
+local KeyCode = 'z'
+
+
+function AA()
+    local oldVelocity = game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity
+    game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(oldVelocity.X, -70, oldVelocity.Z)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(oldVelocity.X, oldVelocity.Y, oldVelocity.Z)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(oldVelocity.X, -70, oldVelocity.Z)
+    game.Players.LocalPlayer.Character.Humanoid.HipHeight = 4.14
+end
+
+game:GetService('UserInputService').InputBegan:Connect(function(Key)
+    if Key.KeyCode == Enum.KeyCode[KeyCode:upper()] and not game:GetService('UserInputService'):GetFocusedTextBox() then
+        if Toggled then
+            Toggled = false
+            game.Players.LocalPlayer.Character.Humanoid.HipHeight = 1.85
+
+        elseif not Toggled then
+            Toggled = true
+
+            while Toggled do
+                AA()
+                task.wait()
+            end
+        end
+    end
+end)
+   end,
+})
+
+
+
+
+
+local Button = Tab:CreateButton({
+   Name = "Mouse Control V1.0.0",
+   Callback = function()
+   local mouse = game.Players.LocalPlayer:GetMouse()
+getgenv().mouse_control = true
+game:GetService("RunService").Heartbeat:Connect(
+    function()
+        if mouse_control ~= false then
+            local vel = game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity
+
+            game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity =
+                Vector3.new(mouse.Hit.X, mouse.Hit.Y, mouse.Hit.Z)
+
+            game:GetService("RunService").RenderStepped:Wait()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = vel
+        end
+    end
+)
+   end,
+})
+
+
+
+
+
+local Button = Tab:CreateButton({
+   Name = "Mouse Control V2.0.0",
+   Callback = function()
+   getgenv().Enabled = true
+getgenv().Velocity = Vector3.new(420, 420, 420)
+getgenv().MouseMode = true
+
+local Player = game:GetService("Players").LocalPlayer
+local Mouse = Player:GetMouse()
+
+game:GetService("RunService").Heartbeat:Connect(function()
+       if Enabled then
+             local OldVelocity = Player.Character.HumanoidRootPart.Velocity
+             local SetVelocity
+            
+             if MouseMode then
+                    SetVelocity = Mouse.Hit
+             else
+                    SetVelocity = Velocity
+             end
+
+             Player.Character.HumanoidRootPart.Velocity = SetVelocity
+             game:GetService("RunService").RenderStepped:Wait()
+             Player.Character.HumanoidRootPart.Velocity = OldVelocity
+       end
+end)
+   end,
+})
+
+
+
+
+local Section = Tab:CreateSection("Aimviewers")
+
+
+
+
+local Button = Tab:CreateButton({
+   Name = "Precious Aimviewer (Q Toggle, T Aimview)",
+   Callback = function()
+   _G.enable = true
+_G.color = Color3.fromRGB(255,255,255)
+_G.toggle_keybind = "q"
+_G.swith_nigga = 't'
+_G.method = "MousePos" --had a stroke sotkraakdakdakdkadkadkakdakdakdkdakdakdkadkadka
+
+if game.PlaceId == 2788229376 then
+    _G.method = "MousePos"
+end
+
+
+---------------------------------------------------------------
+local rs = game:GetService("RunService")
+local localPlayer = game.Players.LocalPlayer
+local mouse = localPlayer:GetMouse()
+local target;
+
+function getgun()
+    for i,v in pairs(target.Character:GetChildren()) do
+        if v and (v:FindFirstChild('Default') or v:FindFirstChild('Handle') )then
+            return v
+        end
+    end
+end
+
+function sendnotifi(message)
+    
+    game.StarterGui:SetCore("SendNotification", {
+        Title = '';
+        Text = message;
+        Duration = "1";
+    })
+        
+    end
+
+
+function get_closet()
+    local a = math.huge
+    local b;
+
+    for i, v in pairs(game.Players:GetPlayers()) do
+        if v ~= localPlayer and v.Character and v.Character:FindFirstChild("Head") and  v.Character:FindFirstChild("HumanoidRootPart")  then
+            local c = game.Workspace.CurrentCamera:WorldToViewportPoint(v.Character.PrimaryPart.Position)
+            local d = (Vector2.new(mouse.X, mouse.Y) - Vector2.new(c.X, c.Y)).Magnitude
+
+            if a > d then
+                b = v
+                a = d
+            end
+        end
+    end
+
+    return b
+end
+
+--- 
+mouse.KeyDown:Connect(function(z)
+    if z == _G.toggle_keybind then
+        if _G.enable == false then
+            _G.enable = true
+            sendnotifi("Precious Aimviewer Enabled")
+        elseif _G.enable == true then
+            _G.enable = false 
+            sendnotifi("Precious Aimviewer Disabled")
+        end
+    end
+end)
+
+mouse.KeyDown:Connect(function(z)
+    if z == _G.swith_nigga then
+        target = get_closet()
+        sendnotifi("targeting: "..tostring(target.Name))
+    end
+end)
+---
+
+-- minified it 
+local a=Instance.new("Beam")a.Segments=1;a.Width0=0.2;a.Width1=0.2;a.Color=ColorSequence.new(_G.color)a.FaceCamera=true;local b=Instance.new("Attachment")local c=Instance.new("Attachment")a.Attachment0=b;a.Attachment1=c;a.Parent=workspace.Terrain;b.Parent=workspace.Terrain;c.Parent=workspace.Terrain
+
+task.spawn(function()
+    rs.RenderStepped:Connect(function()
+ 
+    local character = localPlayer.Character
+        if not character then
+        a.Enabled = false
+        return
+    end
+
+
+ 
+
+
+
+    if _G.enable  and getgun() and target.Character:FindFirstChild("BodyEffects") and target.Character:FindFirstChild("Head")  then
+        a.Enabled = true
+        b.Position =  target.Character:FindFirstChild("Head").Position
+        c.Position = target.Character.BodyEffects[_G.method].Value ---edit this if some random ass game got some weird ass other name :paling_face_
+    else
+        a.Enabled = false
+    end
+
+    end)   
+end)
+   end,
+})
+
+
+
+
+local Section = Tab:CreateSection("Join Our Discord")
+
+
+
+local Label = Tab:CreateLabel("Precious Hub Discord Server Is Currently Down Due To Server Being Mass Reported")
 
 
 
