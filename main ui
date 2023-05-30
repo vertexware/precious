@@ -68,7 +68,7 @@ local Button = Tab:CreateButton({
 local Button = Tab:CreateButton({
    Name = "Dahood Unban [❌ Currently Down]",
    Callback = function()
-   loadstring(game:HttpGet("https://github.com/vertexware/precious/blob/main/script%20down",true))();
+   loadstring(game:HttpGet("https://raw.githubusercontent.com/vertexware/precious/main/script%20down",true))();
    end,
 })
 
