@@ -29,7 +29,7 @@ local MainWindow = Rayfield:CreateWindow({
 })
 
 
-local Tab = MainWindow:CreateTab("Locks", 4483362458) -- Title, Image
+local Tab = MainWindow:CreateTab("Fps Booster, 4483362458) -- Title, Image
 
 
 local Section = Tab:CreateSection("Premium Fps Boost")
