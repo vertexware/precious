@@ -16,7 +16,7 @@ local MainWindow = Rayfield:CreateWindow({
       Invite = "noinvitelink", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ABCD would be ABCD
       RememberJoins = true -- Set this to false to make them join the discord every time they load it up
    },
-   KeySystem = true, -- Set this to true to use our key system
+   KeySystem = false, -- Set this to true to use our key system
    KeySettings = {
       Title = "Preciøus Hub [Main Menu]",
       Subtitle = "Precious Hub Login System",
@@ -33,12 +33,12 @@ local MainWindow = Rayfield:CreateWindow({
 local Tab = MainWindow:CreateTab("Scripts", 4483362458) -- Title, Image
 
 
-local Section = Tab:CreateSection("Precious Hub Scripts")
+local Section = Tab:CreateSection("PREMIUM Version")
 
 
 
 local Button = Tab:CreateButton({
-   Name = "Locks + Streamables V2 [✅ Updated/Running]",
+   Name = "Precious Hub PREMIUM [✅ Updated/Running]",
    Callback = function()
    loadstring(game:HttpGet("https://raw.githubusercontent.com/vertexware/precious/main/precious",true))();
    end,
@@ -46,13 +46,17 @@ local Button = Tab:CreateButton({
 
 
 
-
 local Button = Tab:CreateButton({
-   Name = "Anti Lock V1 [⚠️ Awaiting Update/Errors Reported]",
+   Name = "Fps Booster PREMIUM [✅ Updated/Running]",
    Callback = function()
-   loadstring(game:HttpGet("https://raw.githubusercontent.com/vertexware/precious/main/anti%20lock",true))();
+   loadstring(game:HttpGet("https://raw.githubusercontent.com/vertexware/precious/main/fps%20boost",true))();
    end,
 })
+
+
+
+local Section = Tab:CreateSection("Free Version")
+
 
 
 
@@ -64,13 +68,6 @@ local Button = Tab:CreateButton({
 })
 
 
-
-local Button = Tab:CreateButton({
-   Name = "Dahood Unban [❌ Currently Down]",
-   Callback = function()
-   loadstring(game:HttpGet("https://raw.githubusercontent.com/vertexware/precious/main/script%20down",true))();
-   end,
-})
 
 
 
